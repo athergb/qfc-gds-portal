@@ -231,54 +231,19 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
 
-/* FOOTER STYLES */
+        /* FOOTER STYLES */
         footer {
             background-color: rgba(255, 255, 255, 0.6); /* Low opacity */
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             
             text-align: center;
-            padding: 15px 20px; /* Increased padding for icons */
+            padding: 10px; 
             font-size: 0.8rem;
             color: #777;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-            
-            /* ADDED: Flexbox for left/right layout */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap; /* Allow wrapping on small screens */
-            gap: 20px;
         }
 
-        .footer-left {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .footer-left p {
-            margin: 0;
-        }
-
-        .footer-right {
-            display: flex;
-            gap: 15px; /* Space between icons */
-            align-items: center;
-        }
-
-        /* SOCIAL ICONS STYLES */
-        .social-icon {
-            color: #777; /* Default Gray */
-            text-decoration: none;
-            font-size: 1.2rem; /* Icon size */
-            transition: color 0.3s ease, transform 0.2s ease;
-            display: inline-block;
-        }
-
-        .social-icon:hover {
-            color: var(--primary-color); /* Turn Blue on hover */
-            transform: scale(1.1); /* Slight pop effect */
-        }
         /* Animation */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -383,34 +348,7 @@
 
     <!-- FOOTER SECTION -->
     <footer>
-        <!-- Left Side: Copyright -->
-        <div class="footer-left">
-            <p>&copy; 2026 Powered by AA Technologies. All Rights Reserved.</p>
-        </div>
-
-        <!-- Right Side: Social Media + Search -->
-        <div class="footer-right">
-            <!-- Search Icon -->
-            <a href="https://travelpartner.pk/" class="social-icon" title="Search">
-                <i class="fas fa-search"></i>
-            </a>
-            <!-- Facebook -->
-            <a href="https://www.facebook.com/traveldeals.qfc/" class="social-icon" title="Facebook">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <!-- Twitter / X -->
-            <a href="https://twitter.com" class="social-icon" title="Twitter">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/traveldealsbyqfc/?e=26519ba2-0dff-4bdd-8600-32517147545f&g=5" class="social-icon" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <!-- LinkedIn -->
-            <a href="https://www.linkedin.com/company/qfc-group-pvt-ltd/" class="social-icon" title="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-        </div>
+        <p>&copy; 2026 Powered by AA Technologies. All Rights Reserved.</p>
     </footer>
 
     <!-- JAVASCRIPT FOR CLOCK AND DATE -->
