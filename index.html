@@ -3,367 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent GDS Incentive Scheme - QFC Group</title>
+    <title>Home - QFC Group Pvt Ltd</title>
     
     <!-- Favicon -->
-    <link rel="icon" href="https://z-cdn-media.chatglm.cn/files/db559763-d02e-494f-8941-0d1fbe6f670c.png?auth_key=1870401044-10087ec3a7b041f79d986a52e7fba111-0-6647f74e7247a7f49553e30c23061cc9" type="image/png">
-
-    <!-- Supabase JS Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="icon" href="qfclogo.png">
 
     <style>
         :root {
-            --primary-color: #004aad; 
-            --secondary-color: #8b5a2b; 
-            --bg-color: #f4f6f9;
-            --card-bg: #ffffff;
+            --primary-color: #004aad; /* Blue */
+            --secondary-color: #8b5a2b; /* Brown */
             --text-color: #333333;
-            --border-color: #dddddd;
+            --white: #ffffff;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
             min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 800px;
-            margin: 40px 20px;
-            background: var(--card-bg);
-            padding: 40px; /* Increased padding to accommodate top button */
-            padding-top: 60px; /* Extra top padding */
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        header {
-            /* Position relative to hold the Home button */
-            position: relative;
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px solid var(--bg-color);
-            padding-bottom: 20px;
-        }
-
-        .logo-img { max-height: 80px; margin-bottom: 10px; }
-        .company-name { font-size: 1.2rem; color: var(--secondary-color); font-weight: 600; margin: 0; }
-        h1 { font-size: 1.8rem; color: var(--primary-color); margin: 10px 0 0 0; text-transform: uppercase; }
-
-        /* NEW: Home Button Style */
-        .btn-home {
-            position: absolute;
-            /* POSITIONING: Left Top Corner */
-            left: 20px;
-            top: 10px;
-            /* No transform needed anymore since we are fixing to top */
-            transform: none; 
             
+            /* Layout: Flexbox column for Header, Main, Footer */
+            display: flex;
+            flex-direction: column;
+
+            /* BACKGROUND IMAGE SETTINGS */
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* HEADER STYLES */
+        header {
+            background-color: rgba(255, 255, 255, 0.6); /* Low opacity */
+            backdrop-filter: blur(5px); /* Blur effect */
+            -webkit-backdrop-filter: blur(5px);
+
+            /* REDUCED PADDING: 10px top/bottom instead of 15px */
+            padding: 10px 40px;
+            display: flex;
+            align-items: center; 
+            justify-content: space-between; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Reduced gap */
+        }
+
+        .header-logo {
+            /* REDUCED HEIGHT: 60px instead of 100px */
+            height: 70px;
+            width: auto;
+        }
+
+        .header-title h1 {
+            /* REDUCED FONT SIZE */
+            font-size: 1.2rem; 
+            color: var(--secondary-color);
+            margin: 0;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .header-title h3 {
+            /* REDUCED FONT SIZE AND SPACING */
+            font-size: 0.8rem;
+            font-weight: normal;
+            color: #555;
+            margin: 2px 0 0 0;
+        }
+
+        .header-copyright {
+            /* REDUCED FONT SIZE */
+            font-size: 0.7rem;
+            color: #666;
+            text-align: right;
+        }
+
+        /* MAIN CONTENT AREA */
+        main {
+            flex: 1; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Container for Multiple Cards */
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* CARD STYLES */
+        .main-card {
+            background-color: var(--white);
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 300px; 
+            width: 100%;
+            flex: 1 1 250px; 
+            animation: fadeIn 1s ease-in-out;
+            transition: transform 0.3s ease;
+        }
+
+        .main-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .main-card h2 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 0 0 10px 0;
+        }
+
+        .main-card p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        /* BUTTON STYLES */
+        .btn {
+            display: block;
             text-decoration: none;
             background-color: var(--primary-color);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-size: 0.9rem;
+            color: var(--white);
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
             font-weight: 600;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            transition: background-color 0.2s;
+            margin: 0 auto; 
+            width: auto;
+            min-width: 120px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
 
-        .btn-home:hover {
+        .btn:hover {
             background-color: #003580;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
 
-        /* Toggle Buttons */
-        .toggle-container {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .toggle-btn {
-            padding: 8px 16px;
-            border: 1px solid var(--primary-color);
-            background: transparent;
-            color: var(--primary-color);
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .toggle-btn.active {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        /* Form Layout */
-        form { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .full-width { grid-column: span 2; }
-        .form-group { display: flex; flex-direction: column; }
-        label { font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; color: #555; }
-        input, select { padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 1rem; }
-        
-        /* Hidden Class */
-        .hidden { display: none !important; }
-
-        .btn-submit {
-            grid-column: span 2;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .btn-submit:hover { background-color: #003580; }
-
-        .message {
-            grid-column: span 2; padding: 15px; border-radius: 6px; text-align: center; margin-top: 10px; display: none;
-        }
-        .success { background-color: #d4edda; color: #155724; }
-        .error { background-color: #f8d7da; color: #721c24; }
-
-        @media (max-width: 600px) { 
-            form { grid-template-columns: 1fr; } 
-            .full-width { grid-column: span 1; } 
-            .btn-submit { grid-column: span 1; } 
+        /* FOOTER STYLES */
+        footer {
+            background-color: rgba(255, 255, 255, 0.6); /* Low opacity */
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
             
-            /* Mobile adjustment */
-            .btn-home {
-                position: static;
-                display: inline-block;
-                margin-bottom: 15px;
-                width: 100%;
+            text-align: center;
+            padding: 10px; /* Reduced padding slightly */
+            font-size: 0.8rem;
+            color: #777;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 8px;
+                padding: 10px 20px;
+            }
+            .header-left {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .header-copyright {
                 text-align: center;
             }
-            .container {
-                padding-top: 20px; /* Reduce top padding on mobile */
+            .cards-container {
+                flex-direction: column; 
+                align-items: center;
+            }
+            .main-card {
+                width: 90%;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+    <!-- HEADER SECTION -->
     <header>
-        <!-- Home Button: Positioned Left Top -->
-        <a href="home.html" class="btn-home">Home</a>
-
-        <img src="https://z-cdn-media.chatglm.cn/files/db559763-d02e-494f-8941-0d1fbe6f670c.png?auth_key=1870401044-10087ec3a7b041f79d986a52e7fba111-0-6647f74e7247a7f49553e30c23061cc9" alt="QFC Logo" class="logo-img">
-        <p class="company-name">QFC Group Pvt Ltd</p>
-        <h1>Agent GDS Incentive Scheme</h1>
+        <div class="header-left">
+            <img src="qfclogo.png" alt="QFC Logo" class="header-logo">
+            <div class="header-title">
+                <h1>QFC Group Pvt Ltd</h1>
+                <h3>Welcome to the portal</h3>
+            </div>
+        </div>
+        <div class="header-copyright">
+            &copy; 2024 QFC Group Pvt Ltd.
+        </div>
     </header>
 
-    <form id="allocationForm">
-        
-        <!-- Section 1: Agent Selection Logic -->
-        <div class="form-group full-width">
-            <label>Agent Details</label>
+    <!-- MAIN SECTION: Multiple Cards -->
+    <main>
+        <!-- New Container for Multiple Cards -->
+        <div class="cards-container">
             
-            <!-- Toggle Buttons -->
-            <div class="toggle-container">
-                <button type="button" class="toggle-btn active" id="btnSelectExisting" onclick="setMode('existing')">Select Existing Agent</button>
-                <button type="button" class="toggle-btn" id="btnCreateNew" onclick="setMode('new')">Add New Agent</button>
+            <!-- Card 1 -->
+            <div class="main-card">
+                <h2>GDS Data</h2>
+                <p>Manage allocations</p>
+                <a href="home.html" class="btn">View</a>
             </div>
 
-            <!-- Dropdown for Existing -->
-            <select id="customerName">
-                <option value="" disabled selected>Select Customer</option>
-            </select>
+            <!-- Card 2 (Example for future use) -->
+            <div class="main-card">
+                <h2>Group Seats</h2>
+                <p>Procruement and Sales</p>
+                <a href="https://group-seat-platform.vercel.app/index.html" class="btn">View</a>
+            </div>
 
-            <!-- Input for New Agent (Hidden by default) -->
-            <input type="text" id="newCustomerName" class="hidden" placeholder="Enter New Agent Name" />
+            <!-- Card 3 (Example for future use) -->
+            <div class="main-card">
+                <h2>Group Tickets</h2>
+                <p>Refund Tracker System</p>
+                <a href="https://refund-tracker-gamma.vercel.app/index.html" class="btn">View</a>
+            </div>
+
+            <div class="main-card">
+                <h2>Discount Sheet</h2>
+                <p>For Agents</p>
+                <a href="https://discountsheet.vercel.app/" class="btn">View</a>
+            </div>
+
+            <div class="main-card">
+                <h2>Sales CRM</h2>
+                <p>under deveolpment</p>
+                <a href="https://athergb.pythonanywhere.com/login/" class="btn">View</a>
+            </div>
+
         </div>
+    </main>
 
-        <!-- Section 2: GDS Allocation -->
-        <div class="form-group">
-            <label for="gds">GDS</label>
-            <select id="gds" required>
-                <option value="" disabled selected>Select GDS</option>
-                <option value="Galileo">Galileo</option>
-                <option value="Sabre">Sabre</option>
-                <option value="Amadeus">Amadeus</option>
-            </select>
-        </div>
+    <!-- FOOTER SECTION -->
+    <footer>
+        <p>© 2026 Powered by AA Technologies. All Rights Reserved.</p>
+    </footer>
 
-        <div class="form-group">
-            <label for="pcc">PCC</label>
-            <input type="text" id="pcc" placeholder="e.g. 7J1G" required>
-        </div>
-
-        <div class="form-group">
-            <label for="iataPcc">IATA PCC</label>
-            <input type="text" id="iataPcc" placeholder="e.g. 91234567">
-        </div>
-
-        <div class="form-group">
-            <label for="users">Users</label>
-            <input type="text" id="users" placeholder="Count or Names">
-        </div>
-
-        <div class="form-group">
-            <label for="perSegPrice">Per Seg Price</label>
-            <input type="number" id="perSegPrice" step="0.01" placeholder="0.00" required>
-        </div>
-
-        <div class="form-group">
-            <label for="whitelist">Whitelist</label>
-            <select id="whitelist">
-                <option value="false">No</option>
-                <option value="true">Yes</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="branch">Branch</label>
-            <input type="text" id="branch" placeholder="Branch Name">
-        </div>
-
-        <div class="form-group">
-            <label for="idStatus">ID Status</label>
-            <select id="idStatus">
-                <option value="Active" selected>Active</option>
-                <option value="Inactive">Inactive</option>
-                <option value="Pending">Pending</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn-submit">Save Allocation</button>
-        <div id="formMessage" class="message"></div>
-    </form>
-</div>
-
-<!-- SINGLE SCRIPT BLOCK AT BOTTOM -->
-<script>
-    // CONFIGURATION - PASTE KEYS HERE
-    const SUPABASE_URL = 'https://smbxnuurtufyqymwoang.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNtYnhudXVydHVmeXF5bXdvYW5nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAzOTEzNDAsImV4cCI6MjA4NTk2NzM0MH0.6RqRtHrZgKnYBbvZszk1ETL2jxKE4jORSfgfnHZ7oy0';
-    var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    // STATE
-    let currentMode = 'existing'; 
-    
-    // DOM ELEMENTS
-    const btnExisting = document.getElementById('btnSelectExisting');
-    const btnNew = document.getElementById('btnCreateNew');
-    const customerSelect = document.getElementById('customerName');
-    const newCustomerInput = document.getElementById('newCustomerName');
-    const form = document.getElementById('allocationForm');
-    const messageBox = document.getElementById('formMessage');
-
-    // 1. TOGGLE LOGIC
-    function setMode(mode) {
-        currentMode = mode;
-        if (mode === 'existing') {
-            btnExisting.classList.add('active');
-            btnNew.classList.remove('active');
-            customerSelect.classList.remove('hidden');
-            customerSelect.required = true;
-            newCustomerInput.classList.add('hidden');
-            newCustomerInput.required = false;
-            newCustomerInput.value = ""; 
-        } else {
-            btnNew.classList.add('active');
-            btnExisting.classList.remove('active');
-            customerSelect.classList.add('hidden');
-            customerSelect.required = false;
-            customerSelect.value = ""; 
-            newCustomerInput.classList.remove('hidden');
-            newCustomerInput.required = true;
-        }
-    }
-
-    // 2. LOAD CLIENTS
-    async function loadClients() {
-        const { data, error } = await supabase
-            .from('clients')
-            .select('id, name')
-            .order('name');
-
-        if (!error && data) {
-            customerSelect.innerHTML = '<option value="" disabled selected>Select Customer</option>';
-            data.forEach(client => {
-                const option = document.createElement('option');
-                option.value = client.id;
-                option.textContent = client.name;
-                customerSelect.appendChild(option);
-            });
-        }
-    }
-
-    // 3. SUBMIT
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        showMessage("Saving...", "success");
-        let clientId = null;
-
-        try {
-            if (currentMode === 'new') {
-                const newAgentName = newCustomerInput.value.trim();
-                const { data: newClient, error: insertError } = await supabase
-                    .from('clients')
-                    .insert([{ name: newAgentName }])
-                    .select();
-                if (insertError) throw insertError;
-                clientId = newClient[0].id;
-                
-                // Add to dropdown
-                const option = document.createElement('option');
-                option.value = clientId;
-                option.textContent = newAgentName;
-                customerSelect.appendChild(option);
-            } else {
-                clientId = customerSelect.value;
-            }
-
-            if (!clientId) throw new Error("No Client ID found.");
-
-            const allocationData = {
-                client_id: clientId,
-                gds: document.getElementById('gds').value,
-                pcc: document.getElementById('pcc').value.trim(),
-                iata_pcc: document.getElementById('iataPcc').value.trim(),
-                users: document.getElementById('users').value.trim(),
-                per_seg_price: parseFloat(document.getElementById('perSegPrice').value),
-                whitelist: document.getElementById('whitelist').value === 'true',
-                branch: document.getElementById('branch').value.trim(),
-                id_status: document.getElementById('idStatus').value
-            };
-
-            const { error: allocError } = await supabase
-                .from('agent_allocations')
-                .insert([allocationData]);
-
-            if (allocError) throw allocError;
-
-            showMessage("Allocation saved successfully!", "success");
-            form.reset();
-            setMode('existing');
-
-        } catch (err) {
-            console.error(err);
-            showMessage("Error: " + err.message, "error");
-        }
-    });
-
-    function showMessage(text, type) {
-        messageBox.textContent = text;
-        messageBox.className = `message ${type}`;
-        messageBox.style.display = 'block';
-        setTimeout(() => { messageBox.style.display = 'none'; }, 5000);
-    }
-
-    // Initialize
-    document.addEventListener('DOMContentLoaded', loadClients);
-</script>
 </body>
 </html>
