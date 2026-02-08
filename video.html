@@ -4,26 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QFC Video Showcase</title>
-    <!-- FAVICON -->
     <link rel="icon" type="image/png" href="QFClogo.png">
     <meta name="description" content="Video showcase page for QFC.">
     
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
-            /* Semi-transparent colors for Video Background effect */
             --bg-body: transparent; 
             --bg-surface: rgba(30, 30, 30, 0.75);
             --bg-surface-hover: rgba(42, 42, 42, 0.85);
-            
             --primary: #3ea6ff;
             --primary-hover: #308fe6;
             --secondary: #ffffff;
             --secondary-hover: #e0e0e0;
-            
             --text-main: #ffffff;
             --text-muted: #cccccc;
-            
             --border-color: rgba(255, 255, 255, 0.2);
             --radius-md: 12px;
             --radius-sm: 8px;
@@ -175,7 +170,7 @@
         .main-player video {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Changed to contain so we see full video */
+            object-fit: contain; 
         }
         
         .play-overlay {
@@ -221,7 +216,6 @@
             border: 1px solid var(--border-color);
         }
         
-        /* Added cursor pointer to indicate clickability */
         .featured-item {
             display: flex;
             gap: 12px;
@@ -240,6 +234,7 @@
             overflow: hidden;
             position: relative;
             background: #000;
+            flex-shrink: 0; /* Prevent shrinking */
         }
         .time-badge {
             position: absolute;
@@ -252,15 +247,20 @@
         }
 
         .featured-details h4 {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             margin-bottom: 4px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            font-weight: 600;
         }
-        .featured-details span { font-size: 0.8rem; color: var(--text-muted); display: block; }
+        .featured-details span { 
+            font-size: 0.85rem; 
+            color: var(--primary); /* Made channel name blue like the main player */
+            display: block; 
+        }
 
         /* --- SUGGESTED VIDEOS GRID --- */
         .suggestions-section { padding: 40px 0; }
@@ -425,17 +425,7 @@
                 <img src="QFClogo.png" alt="QFC Logo">
             </a>
 
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="#">Trending</a></li>
-                    <li><a href="#">Subscriptions</a></li>
-                    <li><a href="#">Library</a></li>
-                </ul>
-            </nav>
-
             <div class="header-actions">
-                <a href="#suggest-form" class="btn-upload">+ Suggest Video</a>
                 <a href="index.html" class="btn-home">Home</a>
             </div>
         </div>
@@ -450,7 +440,6 @@
                     <!-- Main Player Area -->
                     <div class="main-content">
                         <div class="main-player">
-                            <!-- ID added for JavaScript control -->
                             <video id="mainVideo" poster="CEO.png" controls>
                                 <source src="CEO.mp4" type="video/mp4">
                             </video>
@@ -462,14 +451,9 @@
                         </div>
 
                         <div class="hero-info">
-                            <!-- ID added to update title dynamically -->
                             <h1 id="mainTitle">A Message from Muhammad Mudassar Hussain Malik, CEO, QFC Group 🌟</h1>
-                            <!-- ID added to update meta data dynamically -->
                             <div class="meta-data" id="mainMeta">
-                                <span style="color: #000;">250K Views</span>
-                                <span>•</span>
-                                <span style="color: #000;">2 days ago</span>
-                                <span>•</span>
+                                <!-- Simplified meta data -->
                                 <span style="color:black">@TravelDealsByQFC</span>
                             </div>
                             <p class="description" id="mainDesc">
@@ -480,46 +464,38 @@
                         </div>
                     </div>
 
-                    <!-- Sidebar: Featured List (UPDATED WITH CLICK HANDLERS) -->
+                    <!-- Sidebar: Featured List (SIMPLIFIED) -->
                     <aside class="featured-list">
                         
-                        <!-- Item 1: Uses external demo video. Replace src with your local file e.g., "myvideo1.mp4" -->
+                        <!-- Item 1 -->
                         <div class="featured-item" 
                              onclick="changeVideo(this)"
                              data-video-src="CCO.mp4"
-                             data-title="Muhammad Rafaqat Ali - CCO, QFC Group"
-                             data-channel="TravelDealsByQFC"
-                             data-views="15M"
-                             data-time="12:04"
-                             data-desc="Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore!">
+                             data-title="Mr. Muhammad Rafaqat Ali - CCO QFC Group Pvt Ltd"
+                             data-channel="TravelDealsByQFC">
                             <div class="featured-thumb">
                                 <img src="CCO.png" alt="Tech Review">
-                                <span class="time-badge">00:38</span>
+                                <span class="time-badge">12:04</span>
                             </div>
                             <div class="featured-details">
-                                <h4>Muhammad Rafaqat Ali - CCO, QFC Group</h4>
-                                <span>@TravelDealsByQFC</span>
-                                <span>15M views</span>
+                                <h4>Mr. Muhammad Rafaqat Ali - CCO</h4>
+                                <span>TravelDealsByQFC</span>
                             </div>
                         </div>
 
                         <!-- Item 2 -->
                         <div class="featured-item" 
                              onclick="changeVideo(this)"
-                             data-video-src="https://www.w3schools.com/html/movie.mp4"
-                             data-title="Wild Bear in the River"
-                             data-channel="Nature Clips"
-                             data-views="2.5M"
-                             data-time="10:05"
-                             data-desc="A short clip featuring a bear fishing in a wild river. Observe nature in its purest form.">
+                             data-video-src="CLB.mp4"
+                             data-title="Annual Function Glimps"
+                             data-channel="TravelDealsByQFC">
                             <div class="featured-thumb">
-                                <img src="https://picsum.photos/seed/code/200/120" alt="Coding Tutorial">
+                                <img src="CLB.png" alt="Coding Tutorial">
                                 <span class="time-badge">10:05</span>
                             </div>
                             <div class="featured-details">
-                                <h4>Wild Bear in the River</h4>
-                                <span>Nature Clips</span>
-                                <span>2.5M views</span>
+                                <h4>Annual Function Glimps</h4>
+                                <span>TravelDealsByQFC</span>
                             </div>
                         </div>
 
@@ -528,10 +504,7 @@
                              onclick="changeVideo(this)"
                              data-video-src="https://media.w3.org/2010/05/sintel/trailer.mp4"
                              data-title="Sintel Trailer - Fantasy Short Film"
-                             data-channel="Blender Foundation"
-                             data-views="50M"
-                             data-time="00:52"
-                             data-desc="Sintel is an independently produced short film, initiated by the Blender Foundation. A lonely young woman, Sintel, helps and befriends a dragon, whom she calls Scales.">
+                             data-channel="Blender Foundation">
                             <div class="featured-thumb">
                                 <img src="https://picsum.photos/seed/food/200/120" alt="Cooking">
                                 <span class="time-badge">00:52</span>
@@ -539,7 +512,6 @@
                             <div class="featured-details">
                                 <h4>Sintel Trailer</h4>
                                 <span>Blender Foundation</span>
-                                <span>50M views</span>
                             </div>
                         </div>
 
@@ -548,10 +520,7 @@
                              onclick="changeVideo(this)"
                              data-video-src="https://media.w3.org/2010/05/bunny/trailer.mp4"
                              data-title="Big Buck Bunny Trailer"
-                             data-channel="Open Movies"
-                             data-views="8M"
-                             data-time="00:32"
-                             data-desc="Official trailer for Big Buck Bunny. The giant rabbit with a heart bigger than himself.">
+                             data-channel="Open Movies">
                             <div class="featured-thumb">
                                 <img src="https://picsum.photos/seed/travel/200/120" alt="Travel">
                                 <span class="time-badge">00:32</span>
@@ -559,7 +528,6 @@
                             <div class="featured-details">
                                 <h4>Big Buck Bunny Trailer</h4>
                                 <span>Open Movies</span>
-                                <span>8M views</span>
                             </div>
                         </div>
 
@@ -574,7 +542,6 @@
             <div class="container">
                 <h2 class="section-title">Suggested For You</h2>
                 <div class="video-grid">
-                    <!-- Note: These cards are visual only in this version, unless you add similar onclick handlers -->
                     <article class="video-card">
                         <div class="card-thumb-wrapper">
                             <img src="https://picsum.photos/seed/music/400/225" alt="Music">
@@ -680,15 +647,12 @@
     <div id="toast">Video suggestion submitted successfully!</div>
 
     <script>
-        // --- 1. SIDEBAR CLICK FUNCTIONALITY ---
+        // --- SIMPLIFIED SIDEBAR CLICK FUNCTION ---
         function changeVideo(element) {
-            // Get data attributes from the clicked item
+            // Get data attributes
             const videoSrc = element.getAttribute('data-video-src');
             const title = element.getAttribute('data-title');
             const channel = element.getAttribute('data-channel');
-            const views = element.getAttribute('data-views');
-            const time = element.getAttribute('data-time');
-            const desc = element.getAttribute('data-desc');
 
             // Get Main Player Elements
             const player = document.getElementById('mainVideo');
@@ -698,31 +662,29 @@
 
             // 1. Change Video Source
             player.src = videoSrc;
-            player.load(); // Important: Reload the video element with new source
+            player.load();
             
             // 2. Play the video automatically
             player.play().catch(error => {
-                console.log("Auto-play prevented by browser policy until user interacts.");
+                console.log("Auto-play prevented by browser policy.");
             });
 
-            // 3. Update Text Info
+            // 3. Update Title
             playerTitle.innerText = title;
-            playerDesc.innerText = desc;
-            
-            // 4. Update Meta Data (Views, Time, Channel)
+
+            // 4. Clear Description (Since we removed data-desc from sidebar)
+            playerDesc.innerText = ""; 
+
+            // 5. Update Meta Data (Only Channel Name now)
             playerMeta.innerHTML = `
-                <span>${views} views</span>
-                <span>•</span>
-                <span>${time}</span>
-                <span>•</span>
                 <span style="color:black">@${channel}</span>
             `;
 
-            // 5. Scroll to top smoothly (optional, but good UX)
+            // 6. Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // --- 2. FORM SUBMISSION FUNCTIONALITY ---
+        // --- FORM SUBMISSION ---
         function handleSuggest(event) {
             event.preventDefault();
             
