@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QFC Video Showcase</title>
-    <!-- 1. ADDED FAVICON HERE -->
+    <!-- FAVICON -->
     <link rel="icon" type="image/png" href="QFClogo.png">
     <meta name="description" content="Video showcase page for QFC.">
     
     <style>
         /* --- CSS VARIABLES & RESET --- */
         :root {
-            /* CHANGED: Removed solid black colors, using rgba for transparency */
+            /* Semi-transparent colors for Video Background effect */
             --bg-body: transparent; 
-            --bg-surface: rgba(30, 30, 30, 0.75); /* 75% opacity dark grey */
+            --bg-surface: rgba(30, 30, 30, 0.75);
             --bg-surface-hover: rgba(42, 42, 42, 0.85);
             
             --primary: #3ea6ff;
@@ -22,12 +22,12 @@
             --secondary-hover: #e0e0e0;
             
             --text-main: #ffffff;
-            --text-muted: #cccccc; /* Lightened text slightly for better contrast on video */
+            --text-muted: #cccccc;
             
-            --border-color: rgba(255, 255, 255, 0.2); /* Subtle borders */
+            --border-color: rgba(255, 255, 255, 0.2);
             --radius-md: 12px;
             --radius-sm: 8px;
-            --shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Darker shadow for contrast */
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --container-width: 1200px;
         }
@@ -52,7 +52,7 @@
         ul { list-style: none; }
         img { max-width: 100%; display: block; object-fit: cover; }
 
-        /* --- VIDEO BACKGROUND STYLES --- */
+        /* --- VIDEO BACKGROUND --- */
         .video-bg {
             position: fixed;
             right: 0;
@@ -61,7 +61,7 @@
             min-height: 100%;
             width: auto;
             height: auto;
-            z-index: -100; /* Behind everything */
+            z-index: -100;
             background-size: cover;
             object-fit: cover;
         }
@@ -72,7 +72,7 @@
             margin: 0 auto;
             padding: 0 20px;
             position: relative;
-            z-index: 1; /* Ensure content is above video */
+            z-index: 1;
         }
 
         .section-title {
@@ -82,7 +82,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Text shadow for readability */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
         
         .section-title::before {
@@ -96,8 +96,8 @@
 
         /* --- HEADER --- */
         header {
-            background-color: rgba(15, 15, 15, 0.8); /* Semi-transparent header */
-            backdrop-filter: blur(10px); /* Blur effect behind header */
+            background-color: rgba(15, 15, 15, 0.8);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
@@ -111,26 +111,14 @@
             align-items: center;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        .logo img {
-            height: 60px;
-            width: auto;
-            display: block;
-        }
+        .logo { display: flex; align-items: center; }
+        .logo img { height: 60px; width: auto; display: block; }
         
         nav ul { display: flex; gap: 24px; }
         nav a { font-weight: 500; color: var(--text-muted); font-size: 0.95rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
         nav a:hover, nav a.active { color: var(--text-main); }
         
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
 
         .btn-upload {
             background-color: var(--primary);
@@ -164,9 +152,7 @@
         }
 
         /* --- HERO SECTION --- */
-        .hero {
-            padding: 40px 0;
-        }
+        .hero { padding: 40px 0; }
 
         .hero-layout {
             display: grid;
@@ -189,7 +175,7 @@
         .main-player video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Changed to contain so we see full video */
         }
         
         .play-overlay {
@@ -210,7 +196,7 @@
             font-size: 1.8rem; 
             margin-bottom: 8px; 
             line-height: 1.3; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Text shadow */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
         .meta-data {
             display: flex;
@@ -226,20 +212,22 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
 
+        /* Sidebar List */
         .featured-list {
-            background: var(--bg-surface); /* Uses semi-transparent variable */
-            backdrop-filter: blur(8px); /* Glass effect */
+            background: var(--bg-surface);
+            backdrop-filter: blur(8px);
             border-radius: var(--radius-md);
             overflow: hidden;
             border: 1px solid var(--border-color);
         }
         
+        /* Added cursor pointer to indicate clickability */
         .featured-item {
             display: flex;
             gap: 12px;
             padding: 12px;
             border-bottom: 1px solid var(--border-color);
-            cursor: pointer;
+            cursor: pointer; 
             transition: background 0.2s;
         }
         .featured-item:last-child { border-bottom: none; }
@@ -283,11 +271,7 @@
             gap: 24px;
         }
 
-        .video-card {
-            background: transparent;
-            cursor: pointer;
-            group: 1;
-        }
+        .video-card { background: transparent; cursor: pointer; group: 1; }
 
         .card-thumb-wrapper {
             position: relative;
@@ -304,10 +288,7 @@
             box-shadow: var(--shadow);
         }
 
-        .card-thumb-wrapper img {
-            width: 100%;
-            height: 100%;
-        }
+        .card-thumb-wrapper img { width: 100%; height: 100%; }
 
         .play-icon {
             position: absolute;
@@ -333,15 +314,12 @@
             line-height: 1.4;
             text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
-        .card-meta {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
+        .card-meta { font-size: 0.85rem; color: var(--text-muted); }
         .card-meta div { margin-bottom: 2px; }
 
         /* --- SUGGEST FORM SECTION --- */
         .submit-section {
-            background-color: var(--bg-surface); /* Semi-transparent */
+            background-color: var(--bg-surface);
             backdrop-filter: blur(10px);
             padding: 60px 0;
             margin-top: 40px;
@@ -351,7 +329,7 @@
         .form-container {
             max-width: 600px;
             margin: 0 auto;
-            background: rgba(0, 0, 0, 0.4); /* Darker semi-transparent */
+            background: rgba(0, 0, 0, 0.4);
             padding: 30px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
@@ -362,7 +340,7 @@
         
         .form-control {
             width: 100%;
-            background: rgba(255, 255, 255, 0.1); /* Very transparent input */
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--border-color);
             color: var(--text-main);
             padding: 12px;
@@ -400,7 +378,7 @@
             backdrop-filter: blur(5px);
         }
 
-        /* --- TOAST NOTIFICATION --- */
+        /* --- TOAST --- */
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -419,11 +397,7 @@
             opacity: 0;
             transition: opacity 0.3s, bottom 0.3s;
         }
-        #toast.show {
-            visibility: visible;
-            opacity: 1;
-            bottom: 50px;
-        }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
@@ -438,8 +412,7 @@
 </head>
 <body>
 
-    <!-- 2. ADDED VIDEO BACKGROUND (VBG.mp4) -->
-    <!-- autoplay muted loop are required for background videos to play automatically -->
+    <!-- VIDEO BACKGROUND -->
     <video class="video-bg" autoplay muted loop playsinline>
         <source src="VBG1.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -448,7 +421,6 @@
     <!-- Header -->
     <header>
         <div class="container nav-wrapper">
-            <!-- QFC LOGO (Image) -->
             <a href="#" class="logo">
                 <img src="QFClogo.png" alt="QFC Logo">
             </a>
@@ -462,10 +434,8 @@
                 </ul>
             </nav>
 
-            <!-- Header Actions -->
             <div class="header-actions">
                 <a href="#suggest-form" class="btn-upload">+ Suggest Video</a>
-                <!-- Home button linking to index.html -->
                 <a href="index.html" class="btn-home">Home</a>
             </div>
         </div>
@@ -480,6 +450,7 @@
                     <!-- Main Player Area -->
                     <div class="main-content">
                         <div class="main-player">
+                            <!-- ID added for JavaScript control -->
                             <video id="mainVideo" poster="CEO.png" controls>
                                 <source src="CEO.mp4" type="video/mp4">
                             </video>
@@ -491,15 +462,17 @@
                         </div>
 
                         <div class="hero-info">
-                            <h1>A Message from Muhammad Mudassar Hussain Malik, CEO, QFC Group 🌟</h1>
-                            <div class="meta-data">
-                                <span>250K Views</span>
+                            <!-- ID added to update title dynamically -->
+                            <h1 id="mainTitle">A Message from Muhammad Mudassar Hussain Malik, CEO, QFC Group 🌟</h1>
+                            <!-- ID added to update meta data dynamically -->
+                            <div class="meta-data" id="mainMeta">
+                                <span style="color: #000;">250K Views</span>
                                 <span>•</span>
-                                <span>2 days ago</span>
+                                <span style="color: #000;">2 days ago</span>
                                 <span>•</span>
                                 <span style="color:black">@TravelDealsByQFC</span>
                             </div>
-                            <p class="description">
+                            <p class="description" id="mainDesc">
                             At QFC Group, our mission goes beyond simply organizing trips, we strive to create journeys that leave lasting memories. 
                             With dedicated team of travel experts, we carefully plan every detail to ensure each experience is seamless, comfortable, and truly extraordinary. Travel is not just a service for us, it’s a passion, a commitment, and a promise to our clients that their dreams will be brought to life with care and excellence.
                             Together, we make every journey unforgettable. ✈️
@@ -507,52 +480,89 @@
                         </div>
                     </div>
 
-                    <!-- Sidebar: Featured List -->
+                    <!-- Sidebar: Featured List (UPDATED WITH CLICK HANDLERS) -->
                     <aside class="featured-list">
-                        <div class="featured-item">
+                        
+                        <!-- Item 1: Uses external demo video. Replace src with your local file e.g., "myvideo1.mp4" -->
+                        <div class="featured-item" 
+                             onclick="changeVideo(this)"
+                             data-video-src="CCO.mp4"
+                             data-title="Muhammad Rafaqat Ali - CCO, QFC Group"
+                             data-channel="TravelDealsByQFC"
+                             data-views="15M"
+                             data-time="12:04"
+                             data-desc="Big Buck Bunny tells the story of a giant rabbit with a heart bigger than himself. When one sunny day three rodents rudely harass him, something snaps... and the rabbit ain't no bunny anymore!">
                             <div class="featured-thumb">
-                                <img src="https://picsum.photos/seed/tech/200/120" alt="Tech Review">
-                                <span class="time-badge">12:04</span>
+                                <img src="CCO.png" alt="Tech Review">
+                                <span class="time-badge">00:38</span>
                             </div>
                             <div class="featured-details">
-                                <h4>The Future of AI in Web Design</h4>
-                                <span>TechDaily</span>
-                                <span>150K views</span>
+                                <h4>Muhammad Rafaqat Ali - CCO, QFC Group</h4>
+                                <span>@TravelDealsByQFC</span>
+                                <span>15M views</span>
                             </div>
                         </div>
-                        <div class="featured-item">
+
+                        <!-- Item 2 -->
+                        <div class="featured-item" 
+                             onclick="changeVideo(this)"
+                             data-video-src="https://www.w3schools.com/html/movie.mp4"
+                             data-title="Wild Bear in the River"
+                             data-channel="Nature Clips"
+                             data-views="2.5M"
+                             data-time="10:05"
+                             data-desc="A short clip featuring a bear fishing in a wild river. Observe nature in its purest form.">
                             <div class="featured-thumb">
                                 <img src="https://picsum.photos/seed/code/200/120" alt="Coding Tutorial">
-                                <span class="time-badge">45:20</span>
+                                <span class="time-badge">10:05</span>
                             </div>
                             <div class="featured-details">
-                                <h4>Learn HTML & CSS in 1 Hour</h4>
-                                <span>CodeMaster</span>
-                                <span>1.2M views</span>
+                                <h4>Wild Bear in the River</h4>
+                                <span>Nature Clips</span>
+                                <span>2.5M views</span>
                             </div>
                         </div>
-                        <div class="featured-item">
+
+                        <!-- Item 3 -->
+                        <div class="featured-item" 
+                             onclick="changeVideo(this)"
+                             data-video-src="https://media.w3.org/2010/05/sintel/trailer.mp4"
+                             data-title="Sintel Trailer - Fantasy Short Film"
+                             data-channel="Blender Foundation"
+                             data-views="50M"
+                             data-time="00:52"
+                             data-desc="Sintel is an independently produced short film, initiated by the Blender Foundation. A lonely young woman, Sintel, helps and befriends a dragon, whom she calls Scales.">
                             <div class="featured-thumb">
                                 <img src="https://picsum.photos/seed/food/200/120" alt="Cooking">
-                                <span class="time-badge">08:15</span>
+                                <span class="time-badge">00:52</span>
                             </div>
                             <div class="featured-details">
-                                <h4>Ultimate Pasta Recipe</h4>
-                                <span>Chef Mario</span>
-                                <span>89K views</span>
+                                <h4>Sintel Trailer</h4>
+                                <span>Blender Foundation</span>
+                                <span>50M views</span>
                             </div>
                         </div>
-                        <div class="featured-item">
+
+                        <!-- Item 4 -->
+                        <div class="featured-item" 
+                             onclick="changeVideo(this)"
+                             data-video-src="https://media.w3.org/2010/05/bunny/trailer.mp4"
+                             data-title="Big Buck Bunny Trailer"
+                             data-channel="Open Movies"
+                             data-views="8M"
+                             data-time="00:32"
+                             data-desc="Official trailer for Big Buck Bunny. The giant rabbit with a heart bigger than himself.">
                             <div class="featured-thumb">
                                 <img src="https://picsum.photos/seed/travel/200/120" alt="Travel">
-                                <span class="time-badge">24:00</span>
+                                <span class="time-badge">00:32</span>
                             </div>
                             <div class="featured-details">
-                                <h4>Tokyo Travel Guide 2024</h4>
-                                <span>Wanderlust</span>
-                                <span>300K views</span>
+                                <h4>Big Buck Bunny Trailer</h4>
+                                <span>Open Movies</span>
+                                <span>8M views</span>
                             </div>
                         </div>
+
                     </aside>
 
                 </div>
@@ -564,8 +574,7 @@
             <div class="container">
                 <h2 class="section-title">Suggested For You</h2>
                 <div class="video-grid">
-                    
-                    <!-- Card 1 -->
+                    <!-- Note: These cards are visual only in this version, unless you add similar onclick handlers -->
                     <article class="video-card">
                         <div class="card-thumb-wrapper">
                             <img src="https://picsum.photos/seed/music/400/225" alt="Music">
@@ -581,7 +590,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 2 -->
                     <article class="video-card">
                         <div class="card-thumb-wrapper">
                             <img src="https://picsum.photos/seed/space/400/225" alt="Space">
@@ -597,7 +605,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 3 -->
                     <article class="video-card">
                         <div class="card-thumb-wrapper">
                             <img src="https://picsum.photos/seed/art/400/225" alt="Art">
@@ -613,7 +620,6 @@
                         </div>
                     </article>
 
-                    <!-- Card 4 -->
                     <article class="video-card">
                         <div class="card-thumb-wrapper">
                             <img src="https://picsum.photos/seed/car/400/225" alt="Cars">
@@ -670,32 +676,70 @@
         </div>
     </footer>
 
-    <!-- Toast Notification Element -->
+    <!-- Toast Notification -->
     <div id="toast">Video suggestion submitted successfully!</div>
 
     <script>
-        // Simple script to handle form submission interaction without page reload
+        // --- 1. SIDEBAR CLICK FUNCTIONALITY ---
+        function changeVideo(element) {
+            // Get data attributes from the clicked item
+            const videoSrc = element.getAttribute('data-video-src');
+            const title = element.getAttribute('data-title');
+            const channel = element.getAttribute('data-channel');
+            const views = element.getAttribute('data-views');
+            const time = element.getAttribute('data-time');
+            const desc = element.getAttribute('data-desc');
+
+            // Get Main Player Elements
+            const player = document.getElementById('mainVideo');
+            const playerTitle = document.getElementById('mainTitle');
+            const playerMeta = document.getElementById('mainMeta');
+            const playerDesc = document.getElementById('mainDesc');
+
+            // 1. Change Video Source
+            player.src = videoSrc;
+            player.load(); // Important: Reload the video element with new source
+            
+            // 2. Play the video automatically
+            player.play().catch(error => {
+                console.log("Auto-play prevented by browser policy until user interacts.");
+            });
+
+            // 3. Update Text Info
+            playerTitle.innerText = title;
+            playerDesc.innerText = desc;
+            
+            // 4. Update Meta Data (Views, Time, Channel)
+            playerMeta.innerHTML = `
+                <span>${views} views</span>
+                <span>•</span>
+                <span>${time}</span>
+                <span>•</span>
+                <span style="color:black">@${channel}</span>
+            `;
+
+            // 5. Scroll to top smoothly (optional, but good UX)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- 2. FORM SUBMISSION FUNCTIONALITY ---
         function handleSuggest(event) {
-            event.preventDefault(); // Stop actual submission
+            event.preventDefault();
             
             const btn = event.target.querySelector('.btn-submit');
             const originalText = btn.innerText;
             
-            // Simulate loading state
             btn.innerText = "Submitting...";
             btn.style.opacity = "0.7";
             
             setTimeout(() => {
-                // Show toast notification
                 const toast = document.getElementById("toast");
                 toast.className = "show";
                 
-                // Reset form and button
                 event.target.reset();
                 btn.innerText = originalText;
                 btn.style.opacity = "1";
                 
-                // Hide toast after 3 seconds
                 setTimeout(function(){ 
                     toast.className = toast.className.replace("show", ""); 
                 }, 3000);
