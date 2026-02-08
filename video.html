@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QFC Video Showcase</title>
+    <!-- 1. ADDED FAVICON HERE -->
+    <link rel="icon" type="image/png" href="QFClogo.png">
+    <meta name="description" content="Video showcase page for QFC.">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            /* CHANGED: Removed solid black colors, using rgba for transparency */
+            --bg-body: transparent; 
+            --bg-surface: rgba(30, 30, 30, 0.75); /* 75% opacity dark grey */
+            --bg-surface-hover: rgba(42, 42, 42, 0.85);
+            
+            --primary: #3ea6ff;
+            --primary-hover: #308fe6;
+            --secondary: #ffffff;
+            --secondary-hover: #e0e0e0;
+            
+            --text-main: #ffffff;
+            --text-muted: #cccccc; /* Lightened text slightly for better contrast on video */
+            
+            --border-color: rgba(255, 255, 255, 0.2); /* Subtle borders */
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Darker shadow for contrast */
+            --font-main: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --container-width: 1200px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        a { text-decoration: none; color: inherit; transition: color 0.2s; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; object-fit: cover; }
+
+        /* --- VIDEO BACKGROUND STYLES --- */
+        .video-bg {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100; /* Behind everything */
+            background-size: cover;
+            object-fit: cover;
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1; /* Ensure content is above video */
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Text shadow for readability */
+        }
+        
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 24px;
+            background-color: var(--primary);
+            border-radius: 2px;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: rgba(15, 15, 15, 0.8); /* Semi-transparent header */
+            backdrop-filter: blur(10px); /* Blur effect behind header */
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 0;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px;
+            width: auto;
+            display: block;
+        }
+        
+        nav ul { display: flex; gap: 24px; }
+        nav a { font-weight: 500; color: var(--text-muted); font-size: 0.95rem; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        nav a:hover, nav a.active { color: var(--text-main); }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-upload {
+            background-color: var(--primary);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-upload:hover { background-color: var(--primary-hover); }
+
+        .btn-home {
+            background-color: rgba(255,255,255,0.1);
+            color: var(--secondary);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            backdrop-filter: blur(4px);
+        }
+        .btn-home:hover {
+            background-color: var(--secondary-hover);
+            color: #000;
+            border-color: var(--secondary-hover);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            padding: 40px 0;
+        }
+
+        .hero-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .main-player {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            aspect-ratio: 16 / 9;
+            border: 1px solid var(--border-color);
+        }
+
+        .main-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .play-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .main-player:hover .play-overlay { opacity: 1; }
+
+        .hero-info { padding: 16px 0; }
+        .hero-info h1 { 
+            font-size: 1.8rem; 
+            margin-bottom: 8px; 
+            line-height: 1.3; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Text shadow */
+        }
+        .meta-data {
+            display: flex;
+            gap: 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+        .description {
+            color: whitesmoke;
+            font-size: 0.95rem;
+            max-width: 800px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .featured-list {
+            background: var(--bg-surface); /* Uses semi-transparent variable */
+            backdrop-filter: blur(8px); /* Glass effect */
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        
+        .featured-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .featured-item:last-child { border-bottom: none; }
+        .featured-item:hover { background-color: var(--bg-surface-hover); }
+
+        .featured-thumb {
+            width: 120px;
+            height: 68px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            position: relative;
+            background: #000;
+        }
+        .time-badge {
+            position: absolute;
+            bottom: 4px; right: 4px;
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            font-size: 0.7rem;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .featured-details h4 {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        }
+        .featured-details span { font-size: 0.8rem; color: var(--text-muted); display: block; }
+
+        /* --- SUGGESTED VIDEOS GRID --- */
+        .suggestions-section { padding: 40px 0; }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .video-card {
+            background: transparent;
+            cursor: pointer;
+            group: 1;
+        }
+
+        .card-thumb-wrapper {
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+        
+        .video-card:hover .card-thumb-wrapper {
+            transform: scale(1.03);
+            box-shadow: var(--shadow);
+        }
+
+        .card-thumb-wrapper img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 40px; height: 40px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .video-card:hover .play-icon { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        .play-icon svg { fill: #fff; width: 16px; height: 16px; margin-left: 2px; }
+
+        .card-info h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            line-height: 1.4;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .card-meta div { margin-bottom: 2px; }
+
+        /* --- SUGGEST FORM SECTION --- */
+        .submit-section {
+            background-color: var(--bg-surface); /* Semi-transparent */
+            backdrop-filter: blur(10px);
+            padding: 60px 0;
+            margin-top: 40px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.4); /* Darker semi-transparent */
+            padding: 30px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-muted); text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        
+        .form-control {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1); /* Very transparent input */
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus { outline: none; border-color: var(--primary); background: rgba(255, 255, 255, 0.15); }
+
+        .btn-submit {
+            background-color: var(--primary);
+            color: #000;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-submit:hover { background-color: var(--primary-hover); }
+        .btn-submit:active { transform: scale(0.98); }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- TOAST NOTIFICATION --- */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: var(--primary);
+            color: #000;
+            text-align: center;
+            border-radius: 50px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .nav-wrapper { flex-wrap: wrap; gap: 10px; }
+            .hero-layout { grid-template-columns: 1fr; }
+            .featured-list { display: none; }
+            nav ul { display: none; } 
+            .header-actions { margin-left: auto; }
+            .hero-info h1 { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 2. ADDED VIDEO BACKGROUND (VBG.mp4) -->
+    <!-- autoplay muted loop are required for background videos to play automatically -->
+    <video class="video-bg" autoplay muted loop playsinline>
+        <source src="VBG1.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Header -->
+    <header>
+        <div class="container nav-wrapper">
+            <!-- QFC LOGO (Image) -->
+            <a href="#" class="logo">
+                <img src="QFClogo.png" alt="QFC Logo">
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Trending</a></li>
+                    <li><a href="#">Subscriptions</a></li>
+                    <li><a href="#">Library</a></li>
+                </ul>
+            </nav>
+
+            <!-- Header Actions -->
+            <div class="header-actions">
+                <a href="#suggest-form" class="btn-upload">+ Suggest Video</a>
+                <!-- Home button linking to index.html -->
+                <a href="index.html" class="btn-home">Home</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-layout">
+                    
+                    <!-- Main Player Area -->
+                    <div class="main-content">
+                        <div class="main-player">
+                            <video id="mainVideo" poster="CEO.png" controls>
+                                <source src="CEO.mp4" type="video/mp4">
+                            </video>
+                            <div class="play-overlay">
+                                <svg width="60" height="60" viewBox="0 0 24 24" fill="white" style="opacity:0.8">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <div class="hero-info">
+                            <h1>A Message from Muhammad Mudassar Hussain Malik, CEO, QFC Group 🌟</h1>
+                            <div class="meta-data">
+                                <span>250K Views</span>
+                                <span>•</span>
+                                <span>2 days ago</span>
+                                <span>•</span>
+                                <span style="color:black">@TravelDealsByQFC</span>
+                            </div>
+                            <p class="description">
+                            At QFC Group, our mission goes beyond simply organizing trips, we strive to create journeys that leave lasting memories. 
+                            With dedicated team of travel experts, we carefully plan every detail to ensure each experience is seamless, comfortable, and truly extraordinary. Travel is not just a service for us, it’s a passion, a commitment, and a promise to our clients that their dreams will be brought to life with care and excellence.
+                            Together, we make every journey unforgettable. ✈️
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Sidebar: Featured List -->
+                    <aside class="featured-list">
+                        <div class="featured-item">
+                            <div class="featured-thumb">
+                                <img src="https://picsum.photos/seed/tech/200/120" alt="Tech Review">
+                                <span class="time-badge">12:04</span>
+                            </div>
+                            <div class="featured-details">
+                                <h4>The Future of AI in Web Design</h4>
+                                <span>TechDaily</span>
+                                <span>150K views</span>
+                            </div>
+                        </div>
+                        <div class="featured-item">
+                            <div class="featured-thumb">
+                                <img src="https://picsum.photos/seed/code/200/120" alt="Coding Tutorial">
+                                <span class="time-badge">45:20</span>
+                            </div>
+                            <div class="featured-details">
+                                <h4>Learn HTML & CSS in 1 Hour</h4>
+                                <span>CodeMaster</span>
+                                <span>1.2M views</span>
+                            </div>
+                        </div>
+                        <div class="featured-item">
+                            <div class="featured-thumb">
+                                <img src="https://picsum.photos/seed/food/200/120" alt="Cooking">
+                                <span class="time-badge">08:15</span>
+                            </div>
+                            <div class="featured-details">
+                                <h4>Ultimate Pasta Recipe</h4>
+                                <span>Chef Mario</span>
+                                <span>89K views</span>
+                            </div>
+                        </div>
+                        <div class="featured-item">
+                            <div class="featured-thumb">
+                                <img src="https://picsum.photos/seed/travel/200/120" alt="Travel">
+                                <span class="time-badge">24:00</span>
+                            </div>
+                            <div class="featured-details">
+                                <h4>Tokyo Travel Guide 2024</h4>
+                                <span>Wanderlust</span>
+                                <span>300K views</span>
+                            </div>
+                        </div>
+                    </aside>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Suggested Videos Grid -->
+        <section class="suggestions-section">
+            <div class="container">
+                <h2 class="section-title">Suggested For You</h2>
+                <div class="video-grid">
+                    
+                    <!-- Card 1 -->
+                    <article class="video-card">
+                        <div class="card-thumb-wrapper">
+                            <img src="https://picsum.photos/seed/music/400/225" alt="Music">
+                            <div class="time-badge">03:45</div>
+                            <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                        </div>
+                        <div class="card-info">
+                            <h3>Lo-Fi Beats to Study/Relax To</h3>
+                            <div class="card-meta">
+                                <div>ChillHop Music</div>
+                                <div>5.4M views • 1 year ago</div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 2 -->
+                    <article class="video-card">
+                        <div class="card-thumb-wrapper">
+                            <img src="https://picsum.photos/seed/space/400/225" alt="Space">
+                            <div class="time-badge">10:30</div>
+                            <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                        </div>
+                        <div class="card-info">
+                            <h3>Journey to the Edge of the Universe</h3>
+                            <div class="card-meta">
+                                <div>Science Hub</div>
+                                <div>890K views • 3 months ago</div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 3 -->
+                    <article class="video-card">
+                        <div class="card-thumb-wrapper">
+                            <img src="https://picsum.photos/seed/art/400/225" alt="Art">
+                            <div class="time-badge">15:10</div>
+                            <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                        </div>
+                        <div class="card-info">
+                            <h3>Digital Art for Beginners</h3>
+                            <div class="card-meta">
+                                <div>ArtStation</div>
+                                <div>120K views • 2 weeks ago</div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 4 -->
+                    <article class="video-card">
+                        <div class="card-thumb-wrapper">
+                            <img src="https://picsum.photos/seed/car/400/225" alt="Cars">
+                            <div class="time-badge">08:22</div>
+                            <div class="play-icon"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+                        </div>
+                        <div class="card-info">
+                            <h3>Restoring a 1967 Mustang</h3>
+                            <div class="card-meta">
+                                <div>Classic Garage</div>
+                                <div>2.1M views • 5 years ago</div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Suggestion Form -->
+        <section id="suggest-form" class="submit-section">
+            <div class="container">
+                <div class="form-container">
+                    <h2 style="margin-bottom: 24px; text-align: center; text-shadow: 0 2px 4px rgba(0,0,0,0.8);">Suggest a Video</h2>
+                    <form id="videoForm" onsubmit="handleSuggest(event)">
+                        <div class="form-group">
+                            <label for="url">Video URL</label>
+                            <input type="url" id="url" class="form-control" placeholder="https://..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Video Title</label>
+                            <input type="text" id="title" class="form-control" placeholder="Enter video title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Category</label>
+                            <select id="category" class="form-control">
+                                <option>Education</option>
+                                <option>Entertainment</option>
+                                <option>Technology</option>
+                                <option>Nature</option>
+                                <option>Gaming</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-submit">Submit Suggestion</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 QFC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification Element -->
+    <div id="toast">Video suggestion submitted successfully!</div>
+
+    <script>
+        // Simple script to handle form submission interaction without page reload
+        function handleSuggest(event) {
+            event.preventDefault(); // Stop actual submission
+            
+            const btn = event.target.querySelector('.btn-submit');
+            const originalText = btn.innerText;
+            
+            // Simulate loading state
+            btn.innerText = "Submitting...";
+            btn.style.opacity = "0.7";
+            
+            setTimeout(() => {
+                // Show toast notification
+                const toast = document.getElementById("toast");
+                toast.className = "show";
+                
+                // Reset form and button
+                event.target.reset();
+                btn.innerText = originalText;
+                btn.style.opacity = "1";
+                
+                // Hide toast after 3 seconds
+                setTimeout(function(){ 
+                    toast.className = toast.className.replace("show", ""); 
+                }, 3000);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
